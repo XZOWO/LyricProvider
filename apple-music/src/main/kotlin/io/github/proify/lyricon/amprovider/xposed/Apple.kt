@@ -8,6 +8,7 @@ package io.github.proify.lyricon.amprovider.xposed
 
 import android.app.Application
 import android.media.MediaMetadata
+import android.media.session.MediaSession
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.kavaref.condition.type.VagueType
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
@@ -27,6 +28,7 @@ import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import java.lang.reflect.Method
 import java.lang.reflect.Modifier
+import org.luckypray.dexkit.DexKitBridge
 
 object Apple : YukiBaseHooker() {
     private lateinit var application: Application
@@ -88,9 +90,10 @@ object Apple : YukiBaseHooker() {
     }
 
     private fun startHooks() {
-        hookExoMediaPlayer()
-        hookMediaMetadataChange()
-        hookLyricBuildMethod()
+        runCatching { hookMediaMetadataChange() }.onFailure { YLog.error("MediaSession metadata hook failed", it) }
+        runCatching { hookPlaybackItems() }.onFailure { YLog.error("PlaybackItem hooks failed", it) }
+        runCatching { hookLyricBuildMethod() }.onFailure { YLog.error("Native lyric hook failed", it) }
+        runCatching { hookExoMediaPlayer() }.onFailure { YLog.error("Playback clock hook failed", it) }
 
 //        XposedHelpers.findAndHookMethod(
 //            "com.apple.android.music.player.viewmodel.PlayerLyricsViewModel",
@@ -108,7 +111,7 @@ object Apple : YukiBaseHooker() {
 
     // --- Hook 1: 歌曲切换监听 ---
     private fun hookMediaMetadataChange() {
-        val method = findMediaMetadataChangeMethod() ?: return
+        val method = MediaSession::class.java.getDeclaredMethod("setMetadata", MediaMetadata::class.java)
 
         method.hook {
             after {
@@ -119,6 +122,33 @@ object Apple : YukiBaseHooker() {
                 PlaybackManager.onSongChanged(metadata.id)
             }
         }
+        YLog.debug("MediaSession.setMetadata hook ready")
+    }
+
+    private fun hookPlaybackItems() {
+        val itemClass = classLoader.loadClass("com.apple.android.music.model.PlaybackItem")
+        val viewModelClass = classLoader.loadClass("com.apple.android.music.player.viewmodel.PlayerLyricsViewModel")
+        viewModelClass.declaredMethods.filter {
+            it.name == "loadLyrics" && it.parameterCount == 1 && itemClass.isAssignableFrom(it.parameterTypes[0])
+        }.forEach { method -> method.hook { before { args[0]?.let(PlaybackManager::onPlaybackItem) } } }
+        fun methods(type: Class<*>) = type.declaredMethods.filter {
+            Modifier.isStatic(it.modifiers) && it.parameterCount == 1 && itemClass.isAssignableFrom(it.returnType)
+        }
+        val candidates = listOf("com.apple.android.music.player.N", "com.apple.android.music.player.M")
+            .mapNotNull { runCatching { classLoader.loadClass(it) }.getOrNull() }
+            .flatMap(::methods).toMutableList()
+        if (candidates.isEmpty()) {
+            DexKitBridge.create(application.applicationInfo.sourceDir).use { bridge ->
+                bridge.findClass {
+                    searchPackages("com.apple.android.music.player")
+                    matcher { usingStrings(AppleTrackIdentity.APPLE_MEDIA_ID, AppleTrackIdentity.APPLE_ENDPOINT) }
+                }.forEach { data ->
+                    runCatching { data.getInstance(classLoader) }.getOrNull()?.let { candidates.addAll(methods(it)) }
+                }
+            }
+        }
+        candidates.distinct().forEach { method -> method.hook { after { result?.let(PlaybackManager::onPlaybackItem) } } }
+        YLog.debug("PlaybackItem mapper hooks ready: ${candidates.size}")
     }
 
     // --- Hook 2: 歌词构建监听 ---
@@ -235,12 +265,4 @@ object Apple : YukiBaseHooker() {
         })
     }
 
-    private fun findMediaMetadataChangeMethod() =
-        "android.support.v4.media.MediaMetadataCompat".toClass()
-            .declaredMethods.firstOrNull {
-                Modifier.isPublic(it.modifiers)
-                        && Modifier.isStatic(it.modifiers)
-                        && it.parameterCount == 1
-                        && it.returnType.simpleName.contains("MediaMetadata")
-            }
 }

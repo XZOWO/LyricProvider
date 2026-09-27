@@ -19,11 +19,11 @@ configure<ApplicationExtension> {
     }
 
     defaultConfig {
-        applicationId = "io.github.proify.lyricon.amprovider"
+        applicationId = "com.naivety.lyricon.amprovider"
         minSdk = 28
         targetSdk = rootProject.extra.get("targetSdkVersion") as Int
-        versionCode = 5
-        versionName = "1.0.20"
+        versionCode = 6
+        versionName = "1.0.21-zhi.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -39,7 +39,7 @@ configure<ApplicationExtension> {
 
     buildTypes {
         getByName("debug") {
-            signingConfig = signingConfigs.getByName("release")
+            signingConfig = signingConfigs.getByName("debug")
         }
         getByName("release") {
             signingConfig = signingConfigs.getByName("release")
@@ -63,6 +63,7 @@ configure<ApplicationExtension> {
 }
 
 dependencies {
+    implementation(libs.dexkit)
     implementation(project(":share:extensions-android"))
     implementation(libs.lyricon.provider)
     implementation(libs.kotlinx.serialization.json)

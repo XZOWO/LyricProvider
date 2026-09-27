@@ -15,9 +15,12 @@ object MediaMetadataCache {
             size > 100
     }
 
+    @Synchronized
     fun putAndGet(metadata: MediaMetadata): Metadata? {
-        val mediaId: String? = metadata.getString(MediaMetadata.METADATA_KEY_MEDIA_ID)
-        if (mediaId.isNullOrBlank()) return null
+        val mediaId = AppleTrackIdentity.mediaId(
+            metadata.getString(MediaMetadata.METADATA_KEY_MEDIA_ID),
+            metadata.getString(AppleTrackIdentity.APPLE_MEDIA_ID)
+        ) ?: return null
 
         val title = metadata.getString(MediaMetadata.METADATA_KEY_TITLE)
         val artist = metadata.getString(MediaMetadata.METADATA_KEY_ARTIST)
@@ -28,6 +31,7 @@ object MediaMetadataCache {
         return newMetadata
     }
 
+    @Synchronized
     fun getMetadataById(mediaId: String): Metadata? = metadataCache[mediaId]
 
     @Serializable

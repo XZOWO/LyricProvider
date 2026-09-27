@@ -6,18 +6,16 @@
 
 package io.github.proify.lyricon.amprovider.xposed
 
-import android.util.Log
 import com.highcapable.yukihookapi.hook.log.YLog
 import io.github.proify.lyricon.lyric.model.Song
 import io.github.proify.lyricon.provider.RemotePlayer
-import kotlin.system.measureTimeMillis
 
 object PlaybackManager {
     private var player: RemotePlayer? = null
     private var lyricRequester: LyricRequester? = null
 
     // 状态追踪
-    private var currentSongId: String? = null
+    @Volatile private var currentSongId: String? = null
 
     fun init(remotePlayer: RemotePlayer, requester: LyricRequester) {
         this.player = remotePlayer
@@ -27,9 +25,11 @@ object PlaybackManager {
     /**
      * 当系统切歌或 Metadata 变化时调用
      */
+    @Synchronized
     fun onSongChanged(newId: String?) {
         if (newId.isNullOrBlank()) {
             currentSongId = null
+            lyricRequester?.cancelPending()
             setSong(null)
             YLog.debug("PlaybackManager: Song changed to null")
             return
@@ -38,6 +38,7 @@ object PlaybackManager {
         // 避免重复处理同一首歌
         if (newId == currentSongId) return
         currentSongId = newId
+        lyricRequester?.cancelPending()
 
         YLog.debug("PlaybackManager: Song changed to $newId")
 
@@ -56,6 +57,7 @@ object PlaybackManager {
     /**
      * 当 Hook 捕获到歌词构建完成时调用
      */
+    @Synchronized
     fun onLyricsBuilt(nativeSongObj: Any) {
         val song = SongRepository.saveSong(nativeSongObj)
         if (song == null) {
@@ -63,21 +65,16 @@ object PlaybackManager {
             return
         }
         val id = song.id
-        val isSongSame by lazy {
-            var same = false
-            val time = measureTimeMillis {
-                same = lastSong != song
-            }
-            Log.d("PlaybackManager", "Same song check took $time ms.")
-            return@lazy same
-        }
-
-        if (id == currentSongId && isSongSame) {
+        if (AppleTrackIdentity.shouldPublish(currentSongId, id, lastSong == song)) {
             YLog.debug("PlaybackManager: Lyrics ready for current song $id, updating player.")
             setSong(song)
-        } else {
+        } else if (id != currentSongId) {
             YLog.debug("PlaybackManager: Lyrics ready for song $id, but not current song.")
         }
+    }
+
+    fun onPlaybackItem(item: Any) {
+        lyricRequester?.rememberPlaybackItem(item)
     }
 
     private var lastSong: Song? = null
