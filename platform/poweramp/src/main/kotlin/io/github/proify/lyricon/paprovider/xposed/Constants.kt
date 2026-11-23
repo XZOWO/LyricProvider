@@ -1,5 +1,7 @@
 package io.github.proify.lyricon.paprovider.xposed
 
+import io.github.proify.lyricon.paprovider.BuildConfig
+
 /**
  * 全局常量定义
  */
@@ -8,7 +10,7 @@ object Constants {
     const val LOG_TAG = "LyricProvider-PowerAmp"
 
     // 插件自身的 Provider 包名，用于 Lyricon 识别
-    const val PROVIDER_PACKAGE_NAME = "io.github.proify.lyricon.paprovider"
+    const val PROVIDER_PACKAGE_NAME = BuildConfig.APPLICATION_ID
 
     // PowerAmp 的 SVG 图标
     const val ICON = """

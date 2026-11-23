@@ -7,7 +7,7 @@ android {
     namespace = "io.github.proify.lyricon.amprovider"
 
     defaultConfig {
-        applicationId = "io.github.proify.lyricon.amprovider"
+        applicationId = "com.naivety.lyricon.amprovider"
         versionCode = 7
         versionName = "1.0.31"
     }

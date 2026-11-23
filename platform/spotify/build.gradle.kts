@@ -13,7 +13,7 @@ android {
     namespace = "io.github.proify.lyricon.spotifyprovider"
 
     defaultConfig {
-        applicationId = "io.github.proify.lyricon.spotifyprovider"
+        applicationId = "com.naivety.lyricon.spotifyprovider"
         versionCode = 4
         versionName = "1.0.1"
     }

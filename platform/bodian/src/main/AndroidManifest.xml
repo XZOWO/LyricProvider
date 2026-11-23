@@ -32,6 +32,10 @@
             android:name="lyricon_module_tags"
             android:resource="@array/lyricon_module_tags" />
 
+        <meta-data
+            android:name="xposedscope"
+            android:resource="@array/xposed_scope" />
+
     </application>
 
 </manifest>

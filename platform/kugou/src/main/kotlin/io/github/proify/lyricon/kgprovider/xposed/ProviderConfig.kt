@@ -6,8 +6,10 @@
 
 package io.github.proify.lyricon.kgprovider.xposed
 
+import io.github.proify.lyricon.kgprovider.BuildConfig
+
 object ProviderConfig {
-    const val PACKAGE_NAME: String = "io.github.proify.lyricon.kgprovider"
+    const val PACKAGE_NAME: String = BuildConfig.APPLICATION_ID
 
     const val LOG_TAG: String = "KuGouProvider"
 

@@ -6,8 +6,10 @@
 
 package io.github.proify.lyricon.feiniuprovider.xposed
 
+import io.github.proify.lyricon.feiniuprovider.BuildConfig
+
 object Constants {
-    const val PROVIDER_PACKAGE_NAME: String = "io.github.proify.lyricon.feiniuprovider"
+    const val PROVIDER_PACKAGE_NAME: String = BuildConfig.APPLICATION_ID
     const val MUSIC_PACKAGE_NAME: String = "com.trim.music"
 
     const val ICON: String =

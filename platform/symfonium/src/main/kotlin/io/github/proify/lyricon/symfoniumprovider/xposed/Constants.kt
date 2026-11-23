@@ -6,8 +6,10 @@
 
 package io.github.proify.lyricon.symfoniumprovider.xposed
 
+import io.github.proify.lyricon.symfoniumprovider.BuildConfig
+
 object Constants {
-    const val PROVIDER_PACKAGE_NAME: String = "io.github.proify.lyricon.symfoniumprovider"
+    const val PROVIDER_PACKAGE_NAME: String = BuildConfig.APPLICATION_ID
 
     val ICON: String =
         """

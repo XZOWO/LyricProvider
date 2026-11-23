@@ -13,7 +13,7 @@ android {
     namespace = "io.github.proify.lyricon.musicfreeprovider"
 
     defaultConfig {
-        applicationId = "io.github.proify.lyricon.musicfreeprovider"
+        applicationId = "com.naivety.lyricon.musicfreeprovider"
         versionCode = 4
         versionName = "1.0.0"
     }

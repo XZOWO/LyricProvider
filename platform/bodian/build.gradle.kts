@@ -13,7 +13,7 @@ android {
     namespace = "io.github.proify.lyricon.bodianprovider"
 
     defaultConfig {
-        applicationId = "io.github.proify.lyricon.bodianprovider"
+        applicationId = "com.naivety.lyricon.bodianprovider"
         versionCode = 1
         versionName = "1.0.0"
     }

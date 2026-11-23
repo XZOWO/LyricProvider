@@ -13,7 +13,7 @@ android {
     namespace = "io.github.proify.lyricon.qmprovider"
 
     defaultConfig {
-        applicationId = "io.github.proify.lyricon.qmprovider"
+        applicationId = "com.naivety.lyricon.qmprovider"
         versionCode = 3
         versionName = "1.0.10"
     }

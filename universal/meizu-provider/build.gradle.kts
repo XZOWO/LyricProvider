@@ -13,7 +13,7 @@ android {
     namespace = "io.github.proify.lyricon.meizuprovider"
 
     defaultConfig {
-        applicationId = "io.github.proify.lyricon.meizuprovider"
+        applicationId = "com.naivety.lyricon.meizuprovider"
         versionCode = 2
         versionName = "1.0.0"
     }

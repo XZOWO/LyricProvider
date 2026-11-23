@@ -13,7 +13,7 @@ android {
     namespace = "io.github.proify.lyricon.retromusicprovider"
 
     defaultConfig {
-        applicationId = "io.github.proify.lyricon.retromusicprovider"
+        applicationId = "com.naivety.lyricon.retromusicprovider"
         versionCode = 1
         versionName = "1.0.0"
     }

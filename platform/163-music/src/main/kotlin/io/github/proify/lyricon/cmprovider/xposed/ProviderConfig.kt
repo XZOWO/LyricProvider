@@ -6,8 +6,10 @@
 
 package io.github.proify.lyricon.cmprovider.xposed
 
+import io.github.proify.lyricon.cmprovider.BuildConfig
+
 object ProviderConfig {
-    const val PROVIDER_PACKAGE_NAME: String = "io.github.proify.lyricon.cmprovider"
+    const val PROVIDER_PACKAGE_NAME: String = BuildConfig.APPLICATION_ID
 
     const val NETEASE_MUSIC_PACKAGE_NAME: String = "com.netease.cloudmusic"
 

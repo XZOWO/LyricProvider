@@ -6,10 +6,12 @@
 
 package io.github.proify.lyricon.bodianprovider.xposed
 
+import io.github.proify.lyricon.bodianprovider.BuildConfig
+
 object Constants {
 
     /** 本模块包名 */
-    const val PROVIDER_PACKAGE_NAME: String = "io.github.proify.lyricon.bodianprovider"
+    const val PROVIDER_PACKAGE_NAME: String = BuildConfig.APPLICATION_ID
 
     /** 波点音乐（QQ 音乐简洁版）包名 */
     const val MUSIC_PACKAGE_NAME: String = "cn.wenyu.bodian"

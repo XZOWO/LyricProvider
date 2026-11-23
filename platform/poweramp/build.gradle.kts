@@ -13,7 +13,7 @@ android {
     namespace = "io.github.proify.lyricon.paprovider"
 
     defaultConfig {
-        applicationId = "io.github.proify.lyricon.paprovider"
+        applicationId = "com.naivety.lyricon.paprovider"
         minSdk = 28
         versionCode = 3
         versionName = "1.0.6"

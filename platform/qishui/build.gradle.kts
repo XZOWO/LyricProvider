@@ -13,7 +13,7 @@ android {
     namespace = "io.github.proify.lyricon.qishuiprovider"
 
     defaultConfig {
-        applicationId = "io.github.proify.lyricon.qishuiprovider"
+        applicationId = "com.naivety.lyricon.qishuiprovider"
         versionCode = 1
         versionName = "1.0.0"
     }

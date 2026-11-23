@@ -13,7 +13,7 @@ android {
     namespace = "io.github.proify.lyricon.gramophoneprovider"
 
     defaultConfig {
-        applicationId = "io.github.proify.lyricon.gramophoneprovider"
+        applicationId = "com.naivety.lyricon.gramophoneprovider"
         versionCode = 1
         versionName = "1.0.0"
     }

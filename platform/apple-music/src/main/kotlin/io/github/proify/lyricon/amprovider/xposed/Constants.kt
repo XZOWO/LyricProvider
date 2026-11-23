@@ -6,8 +6,10 @@
 
 package io.github.proify.lyricon.amprovider.xposed
 
+import io.github.proify.lyricon.amprovider.BuildConfig
+
 object Constants {
-    const val PROVIDER_PACKAGE_NAME: String = "io.github.proify.lyricon.amprovider"
+    const val PROVIDER_PACKAGE_NAME: String = BuildConfig.APPLICATION_ID
     const val APPLE_MUSIC_PACKAGE_NAME: String = "com.apple.android.music"
 
     const val ICON: String =

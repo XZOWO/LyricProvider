@@ -13,7 +13,7 @@ android {
     namespace = "io.github.proify.lyricon.carprovider"
 
     defaultConfig {
-        applicationId = "io.github.proify.lyricon.carprovider"
+        applicationId = "com.naivety.lyricon.carprovider"
         versionCode = 1
         versionName = "1.0.0"
     }

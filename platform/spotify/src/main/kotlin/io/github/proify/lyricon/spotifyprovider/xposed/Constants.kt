@@ -6,9 +6,11 @@
 
 package io.github.proify.lyricon.spotifyprovider.xposed
 
+import io.github.proify.lyricon.spotifyprovider.BuildConfig
+
 /** 模块常量。 */
 object Constants {
-    const val PROVIDER_PACKAGE_NAME: String = "io.github.proify.lyricon.spotifyprovider"
+    const val PROVIDER_PACKAGE_NAME: String = BuildConfig.APPLICATION_ID
     const val MUSIC_PACKAGE_NAME: String = "com.spotify.music"
 
     const val ICON: String =

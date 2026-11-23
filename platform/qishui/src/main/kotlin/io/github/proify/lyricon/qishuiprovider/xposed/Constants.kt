@@ -6,8 +6,10 @@
 
 package io.github.proify.lyricon.qishuiprovider.xposed
 
+import io.github.proify.lyricon.qishuiprovider.BuildConfig
+
 object Constants {
-    const val PROVIDER_PACKAGE_NAME = "io.github.proify.lyricon.qishuiprovider"
+    const val PROVIDER_PACKAGE_NAME = BuildConfig.APPLICATION_ID
 
     val ICON: String = """
      <?xml version="1.0" encoding="UTF-8" standalone="no"?>

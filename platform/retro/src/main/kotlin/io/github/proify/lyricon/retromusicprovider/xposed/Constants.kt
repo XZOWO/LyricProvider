@@ -5,8 +5,10 @@
  */
 package io.github.proify.lyricon.retromusicprovider.xposed
 
+import io.github.proify.lyricon.retromusicprovider.BuildConfig
+
 object Constants {
-    const val PROVIDER_PACKAGE_NAME = "io.github.proify.lyricon.retromusicprovider"
+    const val PROVIDER_PACKAGE_NAME = BuildConfig.APPLICATION_ID
     const val MUSIC_PACKAGE_NAME = "code.name.monkey.retromusic"
     const val LOG_TAG = "LyricProvider-RetroMusic"
 

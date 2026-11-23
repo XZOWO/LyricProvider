@@ -13,7 +13,7 @@ android {
     namespace = "io.github.proify.lyricon.splayerprovider"
 
     defaultConfig {
-        applicationId = "io.github.proify.lyricon.splayerprovider"
+        applicationId = "com.naivety.lyricon.splayerprovider"
         versionCode = 2
         versionName = "1.0.0"
     }

@@ -13,7 +13,7 @@ android {
     namespace = "io.github.proify.lyricon.symfoniumprovider"
 
     defaultConfig {
-        applicationId = "io.github.proify.lyricon.symfoniumprovider"
+        applicationId = "com.naivety.lyricon.symfoniumprovider"
         versionCode = 1
         versionName = "1.0.0"
     }
